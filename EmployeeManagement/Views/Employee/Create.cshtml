@@ -1,0 +1,8 @@
+﻿@model EmployeeManagement.Models.Employee
+<h2>Add Employee</h2>
+<form asp-action="Create" method="post">
+    <div class="mb-3"><input asp-for="Name" class="form-control" placeholder="Name" /></div>
+    <div class="mb-3"><input asp-for="Position" class="form-control" placeholder="Position" /></div>
+    <div class="mb-3"><input asp-for="Salary" class="form-control" placeholder="Salary" /></div>
+    <button class="btn btn-success" type="submit">Save</button>
+</form>

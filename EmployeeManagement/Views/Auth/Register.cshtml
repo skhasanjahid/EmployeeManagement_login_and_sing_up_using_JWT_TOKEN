@@ -1,0 +1,17 @@
+﻿@model EmployeeManagement.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<h2>Register</h2>
+<form asp-action="Register" method="post">
+    <div class="mb-3">
+        <input asp-for="UserName" class="form-control" placeholder="Username" />
+    </div>
+    <div class="mb-3">
+        <input asp-for="Email" class="form-control" placeholder="Email" />
+    </div>
+    <div class="mb-3">
+        <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
+    </div>
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>

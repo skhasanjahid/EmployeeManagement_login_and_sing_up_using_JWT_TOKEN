@@ -83,7 +83,7 @@ namespace EmployeeManagement.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             // Redirect to Employee index (protected)
-            return RedirectToAction("Index", "Employee");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

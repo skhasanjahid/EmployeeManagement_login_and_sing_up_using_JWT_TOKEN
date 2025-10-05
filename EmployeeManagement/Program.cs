@@ -23,7 +23,7 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 
 // Authentication: Cookie for MVC, JWT for APIs
 builder.Services.AddAuthentication(options =>
-{
+{   
     // Default to cookie authentication for MVC pages
     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;

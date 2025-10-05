@@ -5,26 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewData["Title"] - EmployeeManagement</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        /* Sidebar styles */
+        .sidebar {
+            height: 100vh;
+            width: 60px; /* collapsed by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            transition: width 0.3s;
+            overflow-x: hidden;
+            z-index: 1000;
+        }
+
+            .sidebar:hover {
+                width: 200px; /* expand on hover */
+            }
+
+            .sidebar .nav-link {
+                color: #fff;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                transition: background 0.2s;
+            }
+
+                .sidebar .nav-link:hover {
+                    background: #495057;
+                }
+
+                .sidebar .nav-link i {
+                    margin-right: 10px;
+                }
+
+        /* Content area */
+        .content {
+            margin-left: 60px; /* align with collapsed sidebar */
+            transition: margin-left 0.3s;
+            padding: 20px;
+        }
+
+        .sidebar:hover ~ .content {
+            margin-left: 200px; /* shift when expanded */
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand" asp-controller="Employee" asp-action="Index">EMS</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+ 
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Employee" asp-action="Index">Employees</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Auth" asp-action="Token">My JWT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Auth" asp-action="Logout">Logout</a>
+                            <span class="navbar-text">Hello, @User.Identity.Name</span>
                         </li>
                     }
                     else
@@ -37,17 +80,44 @@
                         </li>
                     }
                 </ul>
-                @if (User.Identity?.IsAuthenticated ?? false)
-                {
-                    <span class="navbar-text">
-                        Hello, @User.Identity.Name
-                    </span>
-                }
             </div>
         </div>
     </nav>
 
-    <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column p-1">
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Employee" asp-action="Index">
+                    <i class="bi bi-people"></i> Employees
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Department" asp-action="Index">
+                    <i class="bi bi-building"></i> Departments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Salary" asp-action="Index">
+                    <i class="bi bi-cash-stack"></i> Salary
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-controller="Payroll" asp-action="Index">
+                    <i class="bi bi-receipt"></i> Payroll
+                </a>
+            </li>
+            <li class="nav-item mt-auto">
+                <a class="nav-link text-white" asp-controller="Auth" asp-action="Logout">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+            </li>
+        }
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
         @if (TempData["Success"] != null)
         {
             <div class="alert alert-success">
@@ -56,5 +126,9 @@
         }
         @RenderBody()
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html>

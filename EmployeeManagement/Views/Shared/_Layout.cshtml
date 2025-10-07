@@ -1,134 +1,369 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"] - EmployeeManagement</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <title>HR Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
 
     <style>
-        /* Sidebar styles */
-        .sidebar {
-            height: 100vh;
-            width: 60px; /* collapsed by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #343a40;
-            transition: width 0.3s;
+        body {
+            background-color: #F5F5F5;
+            min-height: 100vh;
+            margin: 0;
             overflow-x: hidden;
-            z-index: 1000;
+            color: #2D2D2D;
         }
 
-            .sidebar:hover {
-                width: 200px; /* expand on hover */
+        /* Navbar */
+        .navbar {
+            height: 56px;
+            z-index: 1001;
+            background: #2E2E38;
+            border-bottom: 0;
+        }
+
+            .navbar .navbar-brand {
+                color: #FF6B35 !important;
+                font-weight: 600;
             }
 
-            .sidebar .nav-link {
+            .navbar .btn-dark {
+                background: linear-gradient(90deg, #FF6B35 0%, #FF9F1C 100%) !important;
+                border: none;
                 color: #fff;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                transition: background 0.2s;
             }
 
-                .sidebar .nav-link:hover {
-                    background: #495057;
+        /* Sidebar */
+        .sidebar {
+            width: 70px;
+            background-color: #2E2E38;
+            color: #2D2D2D;
+            position: fixed;
+            top: 56px;
+            left: 0;
+            height: 100%;
+            overflow-y: auto;
+            padding: 10px 0;
+            transition: width 0.3s ease;
+            z-index: 1050;
+            box-shadow: 2px 0 8px rgba(46,46,56,0.08);
+        }
+
+            .sidebar.expanded {
+                width: 240px;
+            }
+
+            .sidebar h6 {
+                color: #FF6B35;
+                text-transform: uppercase;
+                font-size: 0.75rem;
+                padding-left: 15px;
+                margin-bottom: 10px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                white-space: nowrap;
+            }
+
+            .sidebar.expanded h6 {
+                opacity: 1;
+            }
+
+            .sidebar summary,
+            .sidebar a.single-link {
+                color: #F5F5F5;
+                display: flex;
+                align-items: center;
+                padding: 10px 15px;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background 0.3s ease, color 0.3s ease;
+                white-space: nowrap;
+                border-radius: 4px;
+            }
+
+                .sidebar summary:hover,
+                .sidebar a.single-link:hover {
+                    background: #FF8C42;
+                    color: #fff;
                 }
 
-                .sidebar .nav-link i {
-                    margin-right: 10px;
+            .sidebar i {
+                font-size: 1.2rem;
+                margin-right: 20px;
+                min-width: 30px;
+                text-align: center;
+                color: #FF6B35;
+                transition: color 0.3s ease;
+            }
+
+            .sidebar span.text {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .sidebar.expanded span.text {
+                opacity: 1;
+            }
+
+            .sidebar summary::-webkit-details-marker {
+                display: none;
+            }
+
+            .sidebar details {
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+
+                .sidebar details[open] > summary .dropdown-icon {
+                    transform: rotate(90deg);
+                }
+
+            .sidebar .dropdown-icon {
+                margin-left: auto;
+                transition: transform 0.3s ease;
+                opacity: 0;
+                color: #FF6B35;
+            }
+
+            .sidebar.expanded .dropdown-icon {
+                opacity: 1;
+            }
+
+            .sidebar details ul {
+                list-style: none;
+                padding-left: 50px;
+                margin: 0;
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s ease;
+            }
+
+            .sidebar details.open ul {
+                height: auto;
+            }
+
+            .sidebar details ul li a {
+                display: block;
+                padding: 6px 0;
+                color: #F5F5F5;
+                font-size: 0.9rem;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .sidebar details ul li a:hover {
+                    color: #FF6B35;
                 }
 
         /* Content area */
         .content {
-            margin-left: 60px; /* align with collapsed sidebar */
-            transition: margin-left 0.3s;
+            margin-left: 70px;
             padding: 20px;
+            margin-top: 56px;
+            transition: margin-left 0.3s ease;
+            background: #F5F5F5;
+            color: #2D2D2D;
+            min-height: calc(100vh - 56px);
         }
 
-        .sidebar:hover ~ .content {
-            margin-left: 200px; /* shift when expanded */
+        /* REMOVE this rule so content doesn't move when sidebar opens */
+        /* .sidebar.expanded ~ .content {
+                              margin-left: 240px;
+                            } */
+
+        /* Accent buttons and highlights */
+        .btn-accent, .sidebar a.single-link.active {
+            background: linear-gradient(90deg, #FF6B35 0%, #FF9F1C 100%) !important;
+            color: #fff !important;
+            border: none;
+        }
+
+            .btn-accent:hover {
+                background: linear-gradient(90deg, #FF9F1C 0%, #FF6B35 100%) !important;
+                color: #fff !important;
+            }
+
+        /* Scrollbar hidden for sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #FF6B35;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-controller="Employee" asp-action="Index">EMS</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="btn btn-dark me-2" id="menu-toggle">
+                <i class="bi bi-list fs-4"></i>
             </button>
- 
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    @if (User.Identity?.IsAuthenticated ?? false)
-                    {
-                        <li class="nav-item">
-                            <span class="navbar-text">Hello, @User.Identity.Name</span>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
-                        </li>
-                    }
-                </ul>
-            </div>
+            <a class="navbar-brand" href="#">HR Dashboard</a>
         </div>
     </nav>
 
     <!-- Sidebar -->
-    <div class="sidebar d-flex flex-column p-1">
-        @if (User.Identity?.IsAuthenticated ?? false)
-        {
-            <li class="nav-item">
-                <a class="nav-link text-white" asp-controller="Employee" asp-action="Index">
-                    <i class="bi bi-people"></i> Employees
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" asp-controller="Department" asp-action="Index">
-                    <i class="bi bi-building"></i> Departments
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" asp-controller="Salary" asp-action="Index">
-                    <i class="bi bi-cash-stack"></i> Salary
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" asp-controller="Payroll" asp-action="Index">
-                    <i class="bi bi-receipt"></i> Payroll
-                </a>
-            </li>
-            <li class="nav-item mt-auto">
-                <a class="nav-link text-white" asp-controller="Auth" asp-action="Logout">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </a>
-            </li>
-        }
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h6>Menu</h6>
+
+        <details>
+            <summary><i class="bi bi-people"></i><span class="text">Employee</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li>
+                    <a asp-controller="Employee" asp-action="Create"><i class="bi bi-person-plus"></i> Add Employee</a>
+                </li>
+                <li>
+                    <a asp-controller="Employee" asp-action="Index"><i class="bi bi-person-lines-fill"></i> Manage Employee</a>
+                </li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-calendar-check"></i><span class="text">Attendance</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="DailyAttendance"><i class="bi bi-calendar-day"></i> Daily Attendance</a>
+                </li>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="AttendanceReport"><i class="bi bi-graph-up"></i> Attendance Report</a>
+                </li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-calendar-heart"></i><span class="text">Leaves</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="AddLeave"><i class="bi bi-plus-square"></i> Add Leave</a>
+                </li>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="ManageLeaves"><i class="bi bi-list-check"></i> Manage Leaves</a>
+                </li>
+            </ul>
+        </details>
+
+        <a asp-controller="Dashboard" asp-action="Payrolls" class="single-link"><i class="bi bi-wallet2"></i><span class="text">Payrolls</span></a>
+
+        <details>
+            <summary><i class="bi bi-calendar-event"></i><span class="text">Holidays</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="AddHoliday"><i class="bi bi-plus-circle"></i> Add Holiday</a>
+                </li>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="ManageHoliday"><i class="bi bi-card-list"></i> Manage Holiday</a>
+                </li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-journal-text"></i><span class="text">Daily</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="Notice"><i class="bi bi-megaphone"></i> Notice</a>
+                </li>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="Quote"><i class="bi bi-chat-quote"></i> Quote</a>
+                </li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-graph-up-arrow"></i><span class="text">Performance</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="MonthlyPerformance"><i class="bi bi-calendar-month"></i> Monthly Performance</a>
+                </li>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="PerformanceReport"><i class="bi bi-bar-chart"></i> Performance Report</a>
+                </li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-gear-wide-connected"></i><span class="text">Production</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="DailyProduction"><i class="bi bi-tools"></i> Daily Production</a>
+                </li>
+                <li>
+                    <a asp-controller="Dashboard" asp-action="ProductionReport"><i class="bi bi-file-earmark-bar-graph"></i> Production Report</a>
+                </li>
+            </ul>
+        </details>
+
+        <a asp-controller="Dashboard" asp-action="Setup" class="single-link"><i class="bi bi-sliders"></i><span class="text">Setup</span></a>
+        <a asp-controller="Dashboard" asp-action="Manager" class="single-link"><i class="bi bi-person-badge"></i><span class="text">Manager</span></a>
+        <a asp-controller="Dashboard" asp-action="ActivityLog" class="single-link"><i class="bi bi-activity"></i><span class="text">Activity Log</span></a>
+        <a asp-controller="Dashboard" asp-action="Logout" class="single-link"><i class="bi bi-box-arrow-right"></i><span class="text">Logout</span></a>
     </div>
 
-    <!-- Main Content -->
+
+    <!-- Content -->
     <div class="content">
-        @if (TempData["Success"] != null)
-        {
-            <div class="alert alert-success">
-                @TempData["Success"]
-            </div>
-        }
         @RenderBody()
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const toggleBtn = document.getElementById("menu-toggle");
+
+        // Sidebar toggle by button
+        toggleBtn.addEventListener("click", () => {
+          sidebar.classList.toggle("expanded");
+        });
+
+        // Sidebar expand on hover
+        sidebar.addEventListener("mouseenter", () => {
+          sidebar.classList.add("expanded");
+        });
+        sidebar.addEventListener("mouseleave", () => {
+          sidebar.classList.remove("expanded");
+        });
+
+        // Smooth dropdown animation
+        document.querySelectorAll(".sidebar details").forEach((detail) => {
+          const ul = detail.querySelector("ul");
+          const summary = detail.querySelector("summary");
+
+          summary.addEventListener("click", (e) => {
+            e.preventDefault(); // Prevent instant toggle
+            const isOpen = detail.hasAttribute("open");
+
+            if (!isOpen) {
+              detail.setAttribute("open", "");
+              ul.style.height = "0px";
+              const totalHeight = ul.scrollHeight + "px";
+              requestAnimationFrame(() => {
+                ul.style.height = totalHeight;
+              });
+              setTimeout(() => (ul.style.height = "auto"), 300);
+            } else {
+              const height = ul.scrollHeight + "px";
+              ul.style.height = height;
+              requestAnimationFrame(() => {
+                ul.style.height = "0px";
+              });
+              setTimeout(() => detail.removeAttribute("open"), 300);
+            }
+          });
+        });
+    </script>
 </body>
 </html>

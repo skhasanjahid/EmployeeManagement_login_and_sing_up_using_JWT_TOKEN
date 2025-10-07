@@ -1,295 +1,340 @@
-﻿@* 
-@{
-    ViewData["Title"] = "Index";
-}
-@{
+﻿@{
     Layout = null;
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Management System</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HR Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+
     <style>
-        * {
+        body {
+            background-color: #F5F5F5;
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Segoe UI", sans-serif;
+            overflow-x: hidden;
+            color: #2D2D2D;
         }
 
-        body {
-            line-height: 1.6;
-            color: #333;
-            display: flex;
-            min-height: 100vh;
+        /* Navbar */
+        .navbar {
+            height: 56px;
+            z-index: 1001;
+            background: #2E2E38;
+            border-bottom: 0;
         }
+
+            .navbar .navbar-brand {
+                color: #FF6B35 !important;
+                font-weight: 600;
+            }
+
+            .navbar .btn-dark {
+                background: linear-gradient(90deg, #FF6B35 0%, #FF9F1C 100%) !important;
+                border: none;
+                color: #fff;
+            }
 
         /* Sidebar */
         .sidebar {
-            width: 220px;
-            background: #007bff;
-            color: white;
-            padding: 20px;
-            flex-shrink: 0;
-        }
-
-            .sidebar h2 {
-                text-align: center;
-                margin-bottom: 30px;
-                font-size: 1.5rem;
-            }
-
-            .sidebar a {
-                display: block;
-                color: white;
-                text-decoration: none;
-                padding: 12px 15px;
-                border-radius: 8px;
-                margin-bottom: 10px;
-                transition: 0.3s;
-            }
-
-                .sidebar a:hover {
-                    background: #0056b3;
-                }
-
-        /* Main content */
-        .main-content {
-            flex: 1;
-            background: #f4f4f4;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 60vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url("https://picsum.photos/1600/900?office") center/cover no-repeat;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            padding: 0 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-        }
-
-            .hero h1 {
-                font-size: 3rem;
-                margin-bottom: 20px;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-                margin-bottom: 30px;
-            }
-
-        /* Features */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .feature {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: 0.3s;
-        }
-
-            .feature:hover {
-                transform: translateY(-5px);
-            }
-
-            .feature h3 {
-                margin-bottom: 15px;
-                color: #007bff;
-            }
-
-        /* About Section */
-        .about {
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-
-            .about h2 {
-                margin-bottom: 20px;
-                font-size: 2rem;
-                color: #222;
-            }
-
-            .about p {
-                max-width: 700px;
-                margin: 0 auto;
-                font-size: 1.1rem;
-                color: #555;
-            }
-
-        /* Footer */
-        footer {
-            background: #222;
-            color: #ccc;
-            text-align: center;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2>EMS Menu</h2>
-        <a href="#">Employee</a>
-        <a class="nav-link text-white" asp-controller="Employee" asp-action="Index">
-            <i class="bi bi-people"></i> Employees
-        </a>
-        <a href="#">Department</a>
-        <a href="#">Salary</a>
-        <a href="#">Payroll</a>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-
-        <!-- Hero -->
-        <section class="hero">
-            <h1>Employee Management System</h1>
-            <p>Manage employees, payroll, and attendance in one place.</p>
-        </section>
-
-        <!-- Features -->
-        <section id="features" class="features">
-            <div class="feature">
-                <h3>👨‍💼 Employee Records</h3>
-                <p>Store and manage complete employee information with ease.</p>
-            </div>
-            <div class="feature">
-                <h3>💰 Payroll</h3>
-                <p>Automate salary processing and keep financial records secure.</p>
-            </div>
-            <div class="feature">
-                <h3>⏰ Attendance</h3>
-                <p>Track daily attendance and leave management seamlessly.</p>
-            </div>
-        </section>
-
-        <!-- About -->
-        <section class="about">
-            <h2>About EMS</h2>
-            <p>
-                Our Employee Management System is designed to simplify HR operations.
-                With a user-friendly interface, it provides tools to manage employee data,
-                payroll, and attendance in a secure and efficient manner.
-            </p>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <p>© 2025 Employee Management System. All rights reserved.</p>
-        </footer>
-
-    </div>
-
-</body>
-</html>
-
- *@
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HR Dashboard</title>
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-            background: #f8f9fa;
-        }
-
-        .sidebar {
-            min-width: 220px;
-            max-width: 220px;
-            background: #343a40;
-            color: #fff;
-            min-height: 100vh;
+            width: 70px;
+            background-color: #2E2E38;
+            color: #2D2D2D;
             position: fixed;
-            top: 56px; /* height of navbar */
+            top: 56px;
             left: 0;
-            padding-top: 1rem;
+            height: 100%;
+            overflow-y: auto;
+            padding: 10px 0;
+            transition: width 0.3s ease;
+            z-index: 1050;
+            box-shadow: 2px 0 8px rgba(46,46,56,0.08);
         }
 
-            .sidebar a {
-                color: #fff;
-                text-decoration: none;
-                display: block;
-                padding: 10px 20px;
+            .sidebar.expanded {
+                width: 240px;
             }
 
-                .sidebar a:hover {
-                    background: #495057;
+            .sidebar h6 {
+                color: #FF6B35;
+                text-transform: uppercase;
+                font-size: 0.75rem;
+                padding-left: 15px;
+                margin-bottom: 10px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                white-space: nowrap;
+            }
+
+            .sidebar.expanded h6 {
+                opacity: 1;
+            }
+
+            .sidebar summary,
+            .sidebar a.single-link {
+                color: #F5F5F5;
+                display: flex;
+                align-items: center;
+                padding: 10px 15px;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background 0.3s ease, color 0.3s ease;
+                white-space: nowrap;
+                border-radius: 4px;
+            }
+
+                .sidebar summary:hover,
+                .sidebar a.single-link:hover {
+                    background: #FF8C42;
+                    color: #fff;
                 }
 
-        .content {
-            margin-left: 220px;
-            padding: 2rem;
-            margin-top: 56px; /* height of navbar */
-        }
-        
+            .sidebar i {
+                font-size: 1.2rem;
+                margin-right: 20px;
+                min-width: 30px;
+                text-align: center;
+                color: #FF6B35;
+                transition: color 0.3s ease;
+            }
 
+            .sidebar span.text {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .sidebar.expanded span.text {
+                opacity: 1;
+            }
+
+            .sidebar summary::-webkit-details-marker {
+                display: none;
+            }
+
+            .sidebar details {
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+
+                .sidebar details[open] > summary .dropdown-icon {
+                    transform: rotate(90deg);
+                }
+
+            .sidebar .dropdown-icon {
+                margin-left: auto;
+                transition: transform 0.3s ease;
+                opacity: 0;
+                color: #FF6B35;
+            }
+
+            .sidebar.expanded .dropdown-icon {
+                opacity: 1;
+            }
+
+            .sidebar details ul {
+                list-style: none;
+                padding-left: 50px;
+                margin: 0;
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s ease;
+            }
+
+            .sidebar details.open ul {
+                height: auto;
+            }
+
+            .sidebar details ul li a {
+                display: block;
+                padding: 6px 0;
+                color: #F5F5F5;
+                font-size: 0.9rem;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .sidebar details ul li a:hover {
+                    color: #FF6B35;
+                }
+
+        /* Content area */
+        .content {
+            margin-left: 70px;
+            padding: 20px;
+            margin-top: 56px;
+            transition: margin-left 0.3s ease;
+            background: #F5F5F5;
+            color: #2D2D2D;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* REMOVE this rule so content doesn't move when sidebar opens */
+        /* .sidebar.expanded ~ .content {
+                      margin-left: 240px;
+                    } */
+
+        /* Accent buttons and highlights */
+        .btn-accent, .sidebar a.single-link.active {
+            background: linear-gradient(90deg, #FF6B35 0%, #FF9F1C 100%) !important;
+            color: #fff !important;
+            border: none;
+        }
+
+            .btn-accent:hover {
+                background: linear-gradient(90deg, #FF9F1C 0%, #FF6B35 100%) !important;
+                color: #fff !important;
+            }
+
+        /* Scrollbar hidden for sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #FF6B35;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">HR Dashboard</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="btn btn-dark me-2" id="menu-toggle">
+                <i class="bi bi-list fs-4"></i>
             </button>
-            <!-- Add other navbar items here if needed -->
+            <a class="navbar-brand" href="#">HR Dashboard</a>
         </div>
     </nav>
 
     <!-- Sidebar -->
-    <div class="sidebar">
-        <h5 class="px-3">Menu</h5>
-        <a href="#">Employee</a>
-        <a href="#">Department</a>
-        <a href="#">Payroll</a>
-        <a href="#">Attendance</a>
-        <a href="#">Leave</a>
-        <a href="#">Reports</a>
+    <div class="sidebar" id="sidebar">
+        <h6>Menu</h6>
+
+        <details>
+            <summary><i class="bi bi-people"></i><span class="text">Employee</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li><a href="#"><i class="bi bi-person-plus"></i> Add Employee</a></li>
+                <li><a href="#"><i class="bi bi-person-lines-fill"></i> Manage Employee</a></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-calendar-check"></i><span class="text">Attendance</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li><a href="#"><i class="bi bi-calendar-day"></i> Daily Attendance</a></li>
+                <li><a href="#"><i class="bi bi-graph-up"></i> Attendance Report</a></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-calendar-heart"></i><span class="text">Leaves</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li><a href="#"><i class="bi bi-plus-square"></i> Add Leave</a></li>
+                <li><a href="#"><i class="bi bi-list-check"></i> Manage Leaves</a></li>
+            </ul>
+        </details>
+
+        <a href="#" class="single-link"><i class="bi bi-wallet2"></i><span class="text">Payrolls</span></a>
+
+        <details>
+            <summary><i class="bi bi-calendar-event"></i><span class="text">Holidays</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li><a href="#"><i class="bi bi-plus-circle"></i> Add Holiday</a></li>
+                <li><a href="#"><i class="bi bi-card-list"></i> Manage Holiday</a></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-journal-text"></i><span class="text">Daily</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li><a href="#"><i class="bi bi-megaphone"></i> Notice</a></li>
+                <li><a href="#"><i class="bi bi-chat-quote"></i> Quote</a></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-graph-up-arrow"></i><span class="text">Performance</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li><a href="#"><i class="bi bi-calendar-month"></i> Monthly Performance</a></li>
+                <li><a href="#"><i class="bi bi-bar-chart"></i> Performance Report</a></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary><i class="bi bi-gear-wide-connected"></i><span class="text">Production</span><i class="bi bi-chevron-right dropdown-icon"></i></summary>
+            <ul>
+                <li><a href="#"><i class="bi bi-tools"></i> Daily Production</a></li>
+                <li><a href="#"><i class="bi bi-file-earmark-bar-graph"></i> Production Report</a></li>
+            </ul>
+        </details>
+
+        <a href="#" class="single-link"><i class="bi bi-sliders"></i><span class="text">Setup</span></a>
+        <a href="#" class="single-link"><i class="bi bi-person-badge"></i><span class="text">Manager</span></a>
+        <a href="#" class="single-link"><i class="bi bi-activity"></i><span class="text">Activity Log</span></a>
+        <a href="#" class="single-link"><i class="bi bi-box-arrow-right"></i><span class="text">Logout</span></a>
     </div>
 
-    <!-- Main Content -->
+    <!-- Content -->
     <div class="content">
-        <h2>Welcome to the HR Dashboard</h2>
-        <p>Select an item from the sidebar to view details.</p>
+        <h3>Welcome to the HR Dashboard</h3>
+        <p>Select a menu option from the sidebar.</p>
     </div>
 
-    <!-- Bootstrap JS CDN -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const toggleBtn = document.getElementById("menu-toggle");
+
+        // Sidebar toggle by button
+        toggleBtn.addEventListener("click", () => {
+          sidebar.classList.toggle("expanded");
+        });
+
+        // Sidebar expand on hover
+        sidebar.addEventListener("mouseenter", () => {
+          sidebar.classList.add("expanded");
+        });
+        sidebar.addEventListener("mouseleave", () => {
+          sidebar.classList.remove("expanded");
+        });
+
+        // Smooth dropdown animation
+        document.querySelectorAll(".sidebar details").forEach((detail) => {
+          const ul = detail.querySelector("ul");
+          const summary = detail.querySelector("summary");
+
+          summary.addEventListener("click", (e) => {
+            e.preventDefault(); // Prevent instant toggle
+            const isOpen = detail.hasAttribute("open");
+
+            if (!isOpen) {
+              detail.setAttribute("open", "");
+              ul.style.height = "0px";
+              const totalHeight = ul.scrollHeight + "px";
+              requestAnimationFrame(() => {
+                ul.style.height = totalHeight;
+              });
+              setTimeout(() => (ul.style.height = "auto"), 300);
+            } else {
+              const height = ul.scrollHeight + "px";
+              ul.style.height = height;
+              requestAnimationFrame(() => {
+                ul.style.height = "0px";
+              });
+              setTimeout(() => detail.removeAttribute("open"), 300);
+            }
+          });
+        });
+    </script>
 </body>
 </html>
